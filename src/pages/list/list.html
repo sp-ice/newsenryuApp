@@ -8,15 +8,32 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
-  </ion-list>
+  <ion-card>
+    <ion-list>
+        <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+        <!-- <ion-icon [name]="item.icon" item-start></ion-icon> -->
+        {{item.title}}
+        <div class="item-note" item-end>
+          {{item.note}}
+        </div>
+      </button>
+    </ion-list>
+  </ion-card>
+
+  <ion-card>
+    <ion-list>
+        <button ion-item *ngFor="let senryu of senryus" (click)="itemTapped($event, item)">
+        <!-- <ion-icon [name]="item.icon" item-start></ion-icon> -->
+        {{senryu.kami_ku}}
+        {{senryu.naka_ku}}
+        {{senryu.simo_ku}}
+        <!-- <div class="item-note" item-end>
+          {{item.note}}
+        </div> -->
+      </button>
+    </ion-list>
+  </ion-card>
+
   <div *ngIf="selectedItem" padding>
     You navigated here from <b>{{selectedItem.title}}</b>
   </div>
