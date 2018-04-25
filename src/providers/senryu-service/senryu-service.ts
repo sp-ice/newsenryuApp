@@ -18,8 +18,12 @@ export class SenryuServiceProvider {
     console.log('Hello SenryuServiceProvider Provider');
   }
 
-  getSenryus(): Observable<PagingObject>{
-    return this.http.get<PagingObject>(AppSettings.API_ENDPOINT+'senryu');
+  getSenryus(_url: string=AppSettings.API_ENDPOINT+'senryu', _since_id:number=null): Observable<PagingObject>{
+  	let senddata={};
+  	if(_since_id != null){
+  		senddata["since_id"] = String(_since_id);
+  	}
+    return this.http.get<PagingObject>(_url, {params:senddata});
   }
 
 }

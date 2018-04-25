@@ -3,38 +3,36 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>最新の川柳</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-list>
-        <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-        <!-- <ion-icon [name]="item.icon" item-start></ion-icon> -->
-        {{item.title}}
-        <div class="item-note" item-end>
-          {{item.note}}
-        </div>
-      </button>
-    </ion-list>
+  <ion-card *ngFor="let senryu of senryus">
+    <ion-item>
+      <p class="item-date">{{ senryu.user_name }} <ion-icon name="calendar"></ion-icon> {{ senryu.created_at }} </p>
+    </ion-item>
+
+    <ion-card-content>
+        <a href="{{senryu.kami_url}}" target="_blank">{{senryu.kami_ku}}</a>
+        <a href="{{senryu.naka_url}}" target="_blank">{{senryu.naka_ku}}</a>
+        <a href="{{senryu.simo_url}}" target="_blank">{{senryu.simo_ku}}</a>
+    </ion-card-content>
+
+    <ion-row class="card-row">
+      <ion-col (click)="itemTapped($event, item)">
+        <div><ion-icon name="heart"></ion-icon> {{ senryu.likes_count }}</div>
+      </ion-col>
+      <ion-col (click)="itemTapped($event, item)">
+        <div><ion-icon name="chatboxes"></ion-icon> {{ senryu.comments_count }}</div>
+      </ion-col>
+    </ion-row>
   </ion-card>
 
-  <ion-card>
-    <ion-list>
-        <button ion-item *ngFor="let senryu of senryus" (click)="itemTapped($event, item)">
-        <!-- <ion-icon [name]="item.icon" item-start></ion-icon> -->
-        {{senryu.kami_ku}}
-        {{senryu.naka_ku}}
-        {{senryu.simo_ku}}
-        <!-- <div class="item-note" item-end>
-          {{item.note}}
-        </div> -->
-      </button>
-    </ion-list>
-  </ion-card>
-
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
+  <ion-infinite-scroll *ngIf="hasNextData" (ionInfinite)="$event.waitFor(loadingNext())">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

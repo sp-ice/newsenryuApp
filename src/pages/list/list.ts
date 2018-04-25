@@ -9,36 +9,42 @@ import { Senryu } from '../../models/senryu';
   templateUrl: 'list.html'
 })
 export class ListPage {
-  selectedItem: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
   senryus: Array<Senryu>;
+  next_page_url: string;
+  since_id: number;
+  hasNextData: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private senryuService: SenryuServiceProvider) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
-
-    // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
-
+    
     senryuService.getSenryus().subscribe(
       pagingObj => {
         this.senryus = pagingObj.data;
-        console.log(this.senryus);
+        this.since_id = this.senryus[0].id;
+        this.next_page_url = pagingObj.next_page_url;
+        this.hasNextData=(this.next_page_url!=null);
+        console.log(pagingObj);
       }, 
       err => console.log(err),
       () => {}
     );
+  }
+
+  loadingNext(): Promise<any> {
+    return new Promise((resolve) => {
+      let url_next = this.next_page_url;
+      url_next = url_next.replace('http://133.130.91.251','http://localhost:8100');//test
+      this.senryuService.getSenryus(url_next, this.since_id).subscribe(
+        pagingObj => {
+          this.senryus = this.senryus.concat(pagingObj.data);
+          this.next_page_url = pagingObj.next_page_url;
+          this.hasNextData=(this.next_page_url!=null);
+          console.log(pagingObj);
+          resolve();
+        }, 
+        err => console.log(err),
+        () => {}
+      );
+    })
   }
 
   itemTapped(event, item) {
