@@ -3,9 +3,10 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { YomuPage } from '../pages/yomu/yomu';
+import { MinePage } from '../pages/mine/mine';
+import { LikedPage } from '../pages/liked/liked';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,9 +18,10 @@ import { WordServiceProvider } from '../providers/word-service/word-service';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
     ListPage,
-    YomuPage
+    YomuPage,
+    MinePage,
+    LikedPage
   ],
   imports: [
     BrowserModule,
@@ -29,9 +31,10 @@ import { WordServiceProvider } from '../providers/word-service/word-service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
     ListPage,
-    YomuPage
+    YomuPage,
+    MinePage,
+    LikedPage
   ],
   providers: [
     StatusBar,

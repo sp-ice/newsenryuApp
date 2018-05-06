@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { WordServiceProvider } from '../../providers/word-service/word-service';
+import { SenryuServiceProvider } from '../../providers/senryu-service/senryu-service';
 import { Word } from '../../models/word';
+import { Senryu } from '../../models/senryu';
 
 /**
  * Generated class for the YomuPage page.
@@ -17,15 +19,11 @@ import { Word } from '../../models/word';
 })
 export class YomuPage {
   words: Array<Word>;
-  kami_ku: string;
-  naka_ku: string;
-  simo_ku: string;
-  kami_ku_id: number;
-  naka_ku_id: number;
-  simo_ku_id: number;
+  senryu: Senryu;
   focus_idx: number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private wordService :WordServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private wordService :WordServiceProvider, private senryuService :SenryuServiceProvider, public loadingCtrl: LoadingController) {
+    this.senryu = <Senryu>{};
   }
 
   ionViewDidLoad() {
@@ -50,15 +48,33 @@ export class YomuPage {
   wordTapped(event, word) {
     console.log(word);
     if(this.focus_idx == 1){
-      this.kami_ku_id=word.id;
-      this.kami_ku=word.word;
+      this.senryu.kami_id=word.id;
+      this.senryu.kami_ku=word.word;
     }else if(this.focus_idx == 2){
-      this.naka_ku_id=word.id;
-      this.naka_ku=word.word;
+      this.senryu.naka_id=word.id;
+      this.senryu.naka_ku=word.word;
     }else if(this.focus_idx == 3){
-      this.simo_ku_id=word.id;
-      this.simo_ku=word.word;
+      this.senryu.simo_id=word.id;
+      this.senryu.simo_ku=word.word;
     }
+  }
+
+  yomuTapped(event) {
+    this.loadingCtrl
+      let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present();
+    console.log(this.senryu);
+    this.senryuService.postSenryu(this.senryu).subscribe(
+      storedSenryu => {
+        loading.dismiss();
+        console.log(storedSenryu);
+        this.navCtrl.pop();
+      }, 
+      err => console.log(err),
+      () => {}
+    );
   }
 
 }

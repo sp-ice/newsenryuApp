@@ -19,11 +19,35 @@ export class SenryuServiceProvider {
   }
 
   getSenryus(_url: string=AppSettings.API_ENDPOINT+'senryu', _since_id:number=null): Observable<PagingObject>{
-  	let senddata={};
   	if(_since_id != null){
-  		senddata["since_id"] = String(_since_id);
+  		_url = this.addParam2URL(_url, 'since_id', _since_id);
   	}
-    return this.http.get<PagingObject>(_url, {params:senddata});
+    return this.http.get<PagingObject>(_url);
+  }
+
+  getMySenryus(_url: string=AppSettings.API_ENDPOINT+'senryu', _since_id:number=null): Observable<PagingObject>{
+  	_url = this.addParam2URL(_url, 'mode', 'mine');
+  	if(_since_id != null){
+  		_url = this.addParam2URL(_url, 'since_id', _since_id);
+  	}
+    return this.http.get<PagingObject>(_url);
+  }
+
+  postSenryu(_senryu:Senryu): Observable<Senryu>{
+  	let url = AppSettings.API_ENDPOINT+'senryu'
+  	let senddata={
+  		word_kami_id: _senryu.kami_id,
+  		word_naka_id: _senryu.naka_id,
+  		word_simo_id: _senryu.simo_id,
+  	};
+    return this.http.post<Senryu>(url, senddata);
+  }
+
+  private addParam2URL(_url: string, _key:string, _value:any):string{
+    var resurl = _url;
+    resurl += (resurl.indexOf('?') == -1) ? '?':'&';
+    resurl += _key + '=' + String(_value);
+    return resurl;
   }
 
 }

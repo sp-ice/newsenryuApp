@@ -3,9 +3,10 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { YomuPage } from '../pages/yomu/yomu';
+import { MinePage } from '../pages/mine/mine';
+import { LikedPage } from '../pages/liked/liked';
 
 @Component({
   templateUrl: 'app.html'
@@ -13,7 +14,7 @@ import { YomuPage } from '../pages/yomu/yomu';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = ListPage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -22,9 +23,10 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
       { title: '最新の川柳', component: ListPage },
-      { title: ' 一句詠む', component: YomuPage }
+      // { title: ' 一句詠む', component: YomuPage }
+      { title: '自分が詠んだ川柳', component: MinePage },
+      { title: 'イイネした川柳', component: LikedPage },
     ];
 
   }
