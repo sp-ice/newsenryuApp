@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { AppSettings } from '../../app/app.settings';
 import { Senryu } from '../../models/senryu';
+import { Like } from '../../models/like';
 import { PagingObject } from '../../models/paging.object';
 /*
   Generated class for the SenryuServiceProvider provider.
@@ -34,13 +35,22 @@ export class SenryuServiceProvider {
   }
 
   postSenryu(_senryu:Senryu): Observable<Senryu>{
-  	let url = AppSettings.API_ENDPOINT+'senryu'
+  	let url = AppSettings.API_ENDPOINT+'senryu';
   	let senddata={
   		word_kami_id: _senryu.kami_id,
   		word_naka_id: _senryu.naka_id,
   		word_simo_id: _senryu.simo_id,
   	};
     return this.http.post<Senryu>(url, senddata);
+  }
+
+  likeSenryu(_senryu:Senryu, _flg_delete:Boolean=false): Observable<Like>{
+    let url = AppSettings.API_ENDPOINT+'like';
+    let senddata={
+      senryu_id: _senryu.id,
+      flg_delete: _flg_delete
+    };
+    return this.http.post<Like>(url, senddata);
   }
 
   private addParam2URL(_url: string, _key:string, _value:any):string{

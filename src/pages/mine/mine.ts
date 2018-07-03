@@ -17,6 +17,10 @@ import { YomuPage } from '../yomu/yomu';
   templateUrl: 'mine.html',
 })
 export class MinePage {
+  senryus: Array<Senryu>;
+  next_page_url: string;
+  since_id: number;
+  hasNextData: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private senryuService: SenryuServiceProvider) {
     senryuService.getMySenryus().subscribe(

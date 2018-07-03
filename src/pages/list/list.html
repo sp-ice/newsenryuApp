@@ -20,12 +20,19 @@
     </ion-card-content>
 
     <ion-row class="card-row">
-      <ion-col (click)="itemTapped($event, item)">
-        <div><ion-icon name="heart"></ion-icon> {{ senryu.likes_count }}</div>
+      <ion-col (click)="likeTapped($event, senryu)" *ngIf="senryu.is_liked!==1">
+        <div>
+          <ion-icon name="heart-outline"></ion-icon>{{ senryu.like_count }}
+        </div>
       </ion-col>
-      <ion-col (click)="itemTapped($event, item)">
+      <ion-col (click)="unLikeTapped($event, senryu)" *ngIf="senryu.is_liked===1">
+          <div>
+            <ion-icon name="heart"></ion-icon>{{ senryu.like_count }}
+          </div>
+        </ion-col>
+      <!-- <ion-col (click)="itemTapped($event, item)">
         <div><ion-icon name="chatboxes"></ion-icon> {{ senryu.comments_count }}</div>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
   </ion-card>
 

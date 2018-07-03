@@ -33,7 +33,7 @@ export class ListPage {
   loadingNext(): Promise<any> {
     return new Promise((resolve) => {
       let url_next = this.next_page_url;
-      url_next = url_next.replace('http://133.130.91.251','http://localhost:8100');//test
+      url_next = url_next.replace('http://133.130.91.251','http://localhost:8100');//todo 環境変数で切り分け
       this.senryuService.getSenryus(url_next, this.since_id).subscribe(
         pagingObj => {
           this.senryus = this.senryus.concat(pagingObj.data);
@@ -50,5 +50,29 @@ export class ListPage {
 
   yomuTapped(event) {
     this.navCtrl.push(YomuPage);
+  }
+
+  likeTapped(event, senryu:Senryu) {
+    this.senryuService.likeSenryu(senryu).subscribe(
+      like => {
+        console.log(like);
+        senryu.like_count++;
+        senryu.is_liked=1;
+      }, 
+      err => console.log(err),
+      () => {}
+    );
+  }
+
+  unLikeTapped(event, senryu:Senryu) {
+    this.senryuService.likeSenryu(senryu, true).subscribe(
+      like => {
+        console.log(like);
+        senryu.like_count--;
+        senryu.is_liked=0;
+      }, 
+      err => console.log(err),
+      () => {}
+    );
   }
 }
