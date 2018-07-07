@@ -15,6 +15,8 @@ import { SenryuServiceProvider } from '../providers/senryu-service/senryu-servic
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { WordServiceProvider } from '../providers/word-service/word-service';
 
+import { ComponentsModule } from '../components/components.module';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -26,7 +28,8 @@ import { WordServiceProvider } from '../providers/word-service/word-service';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

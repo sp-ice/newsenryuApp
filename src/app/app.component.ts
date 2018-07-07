@@ -24,7 +24,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: '最新の川柳', component: ListPage },
-      // { title: ' 一句詠む', component: YomuPage }
+      { title: ' 一句詠む', component: YomuPage },
       { title: '自分が詠んだ川柳', component: MinePage },
       { title: 'イイネした川柳', component: LikedPage },
     ];

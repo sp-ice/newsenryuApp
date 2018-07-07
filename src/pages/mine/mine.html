@@ -17,33 +17,7 @@
 
 
 <ion-content>
-  <ion-card *ngFor="let senryu of senryus">
-    <ion-item>
-      <p class="item-date">{{ senryu.user_name }} <ion-icon name="calendar"></ion-icon> {{ senryu.created_at }} </p>
-    </ion-item>
-
-    <ion-card-content>
-        <a href="{{senryu.kami_url}}" target="_blank">{{senryu.kami_ku}}</a>
-        <a href="{{senryu.naka_url}}" target="_blank">{{senryu.naka_ku}}</a>
-        <a href="{{senryu.simo_url}}" target="_blank">{{senryu.simo_ku}}</a>
-    </ion-card-content>
-
-    <ion-row class="card-row">
-      <ion-col (click)="itemTapped($event, item)">
-        <div><ion-icon name="heart"></ion-icon> {{ senryu.likes_count }}</div>
-      </ion-col>
-      <ion-col (click)="itemTapped($event, item)">
-        <div><ion-icon name="chatboxes"></ion-icon> {{ senryu.comments_count }}</div>
-      </ion-col>
-    </ion-row>
-  </ion-card>
+  <senryu-list mode="this.modeGetSenryu"></senryu-list>
 
   <button right bottom ion-fab (click)="yomuTapped($event)" class="yomuBtn"><ion-icon name="brush"></ion-icon></button>
-
-  <ion-infinite-scroll *ngIf="hasNextData" (ionInfinite)="$event.waitFor(loadingNext())">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 </ion-content>

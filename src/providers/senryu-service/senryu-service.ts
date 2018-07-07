@@ -19,18 +19,20 @@ export class SenryuServiceProvider {
     console.log('Hello SenryuServiceProvider Provider');
   }
 
-  getSenryus(_url: string=AppSettings.API_ENDPOINT+'senryu', _since_id:number=null): Observable<PagingObject>{
-  	if(_since_id != null){
+  getSenryus(_mode:number=AppSettings.MODE_GET_SENRYU_NORMAL, _url: string=AppSettings.API_ENDPOINT+'senryu', _since_id:number=null): Observable<PagingObject>{
+    switch (_mode) {
+      case AppSettings.MODE_GET_SENRYU_MINE:  
+        _url = this.addParam2URL(_url, 'mode', 'mine');
+        break;
+      case AppSettings.MODE_GET_SENRYU_NORMAL:  
+        break;
+      default:
+        break;
+    }
+    if(_since_id != null){
   		_url = this.addParam2URL(_url, 'since_id', _since_id);
-  	}
-    return this.http.get<PagingObject>(_url);
-  }
-
-  getMySenryus(_url: string=AppSettings.API_ENDPOINT+'senryu', _since_id:number=null): Observable<PagingObject>{
-  	_url = this.addParam2URL(_url, 'mode', 'mine');
-  	if(_since_id != null){
-  		_url = this.addParam2URL(_url, 'since_id', _since_id);
-  	}
+    }
+    console.log("getSenryu:"+_url);
     return this.http.get<PagingObject>(_url);
   }
 
