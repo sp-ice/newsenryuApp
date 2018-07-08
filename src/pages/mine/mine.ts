@@ -19,6 +19,7 @@ export class MinePage {
   modeGetSenryu: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    console.log('minePage constructor');
     this.modeGetSenryu=AppSettings.MODE_GET_SENRYU_MINE;
   }
 

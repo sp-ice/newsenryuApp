@@ -24,6 +24,9 @@ export class SenryuServiceProvider {
       case AppSettings.MODE_GET_SENRYU_MINE:  
         _url = this.addParam2URL(_url, 'mode', 'mine');
         break;
+      case AppSettings.MODE_GET_SENRYU_LIKED:
+        _url = this.addParam2URL(_url, 'mode', 'liked');
+        break;
       case AppSettings.MODE_GET_SENRYU_NORMAL:  
         break;
       default:

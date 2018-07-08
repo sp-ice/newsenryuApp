@@ -5,5 +5,6 @@ export class AppSettings {
 
     //川柳取得モード
     public static MODE_GET_SENRYU_NORMAL=0;
-    public static MODE_GET_SENRYU_MINE=1;//自分がいいねした川柳
+    public static MODE_GET_SENRYU_MINE=1;//自分が投稿した川柳
+    public static MODE_GET_SENRYU_LIKED=2;//自分がいいねした川柳
 }

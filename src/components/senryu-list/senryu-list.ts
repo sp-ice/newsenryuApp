@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input} from '@angular/core';
 
 import { SenryuServiceProvider } from '../../providers/senryu-service/senryu-service';
 import { Senryu } from '../../models/senryu';
@@ -18,14 +18,15 @@ export class SenryuListComponent {
   next_page_url: string;
   since_id: number;
   hasNextData: boolean;
-  mode: number = AppSettings.MODE_GET_SENRYU_NORMAL;
+  @Input() mode: number = AppSettings.MODE_GET_SENRYU_NORMAL;
 
   constructor(private senryuService: SenryuServiceProvider) {
     
   }
 
   ngAfterViewInit() {
-    console.log('ionViewDidLoad SenryuList');
+    console.log('ngAfterViewInit SenryuList');
+    console.log(this.mode);
     this.loadingFirst();
   }
 
