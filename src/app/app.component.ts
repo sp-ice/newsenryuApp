@@ -7,6 +7,8 @@ import { ListPage } from '../pages/list/list';
 import { YomuPage } from '../pages/yomu/yomu';
 import { MinePage } from '../pages/mine/mine';
 import { LikedPage } from '../pages/liked/liked';
+import { LoginPage } from '../pages/login/login';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -27,6 +29,7 @@ export class MyApp {
       { title: ' 一句詠む', component: YomuPage },
       { title: '自分が詠んだ川柳', component: MinePage },
       { title: 'イイネした川柳', component: LikedPage },
+      { title: 'ログイン', component: LoginPage },
     ];
 
   }

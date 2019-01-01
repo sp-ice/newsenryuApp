@@ -7,6 +7,7 @@ import { ListPage } from '../pages/list/list';
 import { YomuPage } from '../pages/yomu/yomu';
 import { MinePage } from '../pages/mine/mine';
 import { LikedPage } from '../pages/liked/liked';
+import { LoginPage } from '../pages/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -16,6 +17,10 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { WordServiceProvider } from '../providers/word-service/word-service';
 
 import { ComponentsModule } from '../components/components.module';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AppSettings } from './app.settings';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
 @NgModule({
   declarations: [
@@ -23,12 +28,14 @@ import { ComponentsModule } from '../components/components.module';
     ListPage,
     YomuPage,
     MinePage,
-    LikedPage
+    LikedPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
+    AngularFireModule.initializeApp(AppSettings.FIREBASE_CONFIG), 
     ComponentsModule
   ],
   bootstrap: [IonicApp],
@@ -37,7 +44,8 @@ import { ComponentsModule } from '../components/components.module';
     ListPage,
     YomuPage,
     MinePage,
-    LikedPage
+    LikedPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
@@ -45,7 +53,9 @@ import { ComponentsModule } from '../components/components.module';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SenryuServiceProvider,
     HttpClientModule,
-    WordServiceProvider
+    WordServiceProvider,
+    AngularFireAuth,
+    AuthServiceProvider
   ]
 })
 export class AppModule {}
