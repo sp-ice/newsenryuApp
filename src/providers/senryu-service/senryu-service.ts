@@ -19,7 +19,7 @@ export class SenryuServiceProvider {
     console.log('Hello SenryuServiceProvider Provider');
   }
 
-  getSenryus(_mode:number=AppSettings.MODE_GET_SENRYU_NORMAL, _url: string=AppSettings.API_ENDPOINT+'senryu', _since_id:number=null): Observable<PagingObject>{
+  getSenryus(_mode:number=AppSettings.MODE_GET_SENRYU_NORMAL, _url: string=AppSettings.getApiEndPoint()+'senryu', _since_id:number=null): Observable<PagingObject>{
     switch (_mode) {
       case AppSettings.MODE_GET_SENRYU_MINE:  
         _url = this.addParam2URL(_url, 'mode', 'mine');
@@ -40,7 +40,7 @@ export class SenryuServiceProvider {
   }
 
   postSenryu(_senryu:Senryu): Observable<Senryu>{
-  	let url = AppSettings.API_ENDPOINT+'senryu';
+  	let url = AppSettings.getApiEndPoint()+'senryu';
   	let senddata={
   		word_kami_id: _senryu.kami_id,
   		word_naka_id: _senryu.naka_id,
@@ -50,7 +50,7 @@ export class SenryuServiceProvider {
   }
 
   likeSenryu(_senryu:Senryu, _flg_delete:Boolean=false): Observable<Like>{
-    let url = AppSettings.API_ENDPOINT+'like';
+    let url = AppSettings.getApiEndPoint()+'like';
     let senddata={
       senryu_id: _senryu.id,
       flg_delete: _flg_delete

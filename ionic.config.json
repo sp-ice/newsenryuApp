@@ -1,14 +1,17 @@
 {
   "name": "newsenryuApp",
-  "app_id": "",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
   },
+  "type": "ionic-angular",
   "proxies": [
     {
       "path": "/api",
       "proxyUrl": "http://133.130.91.251/api"
+    },
+    {
+      "path": "/apis",
+      "proxyUrl": "http://133.130.91.251/apis"
     }
   ]
 }

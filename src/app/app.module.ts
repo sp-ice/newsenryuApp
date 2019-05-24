@@ -15,21 +15,27 @@ import { SenryuServiceProvider } from '../providers/senryu-service/senryu-servic
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { WordServiceProvider } from '../providers/word-service/word-service';
+import { PagesServiceProvider } from '../providers/pages-service/pages-service';
 
 import { ComponentsModule } from '../components/components.module';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AppSettings } from './app.settings';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+// import { ListPageModule } from '../pages/list/list.module';
+import { LoginPageModule } from '../pages/login/login.module';
+import { YomuPageModule } from '../pages/yomu/yomu.module';
+import { MinePageModule } from '../pages/mine/mine.module';
+import { LikedPageModule } from '../pages/liked/liked.module';
 
 @NgModule({
   declarations: [
     MyApp,
     ListPage,
-    YomuPage,
+    // YomuPage,
     MinePage,
-    LikedPage,
-    LoginPage
+    LikedPage
+    // LoginPage
   ],
   imports: [
     BrowserModule,
@@ -42,10 +48,10 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
   entryComponents: [
     MyApp,
     ListPage,
-    YomuPage,
+    // YomuPage,
     MinePage,
-    LikedPage,
-    LoginPage
+    LikedPage
+    // LoginPage
   ],
   providers: [
     StatusBar,
@@ -54,6 +60,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     SenryuServiceProvider,
     HttpClientModule,
     WordServiceProvider,
+    PagesServiceProvider,
     AngularFireAuth,
     AuthServiceProvider
   ]

@@ -3,6 +3,8 @@ import { Component, Input} from '@angular/core';
 import { SenryuServiceProvider } from '../../providers/senryu-service/senryu-service';
 import { Senryu } from '../../models/senryu';
 import { AppSettings } from '../../app/app.settings';
+import { LoadingController } from 'ionic-angular';
+
 /**
  * Generated class for the SenryuListComponent component.
  *
@@ -20,7 +22,7 @@ export class SenryuListComponent {
   hasNextData: boolean;
   @Input() mode: number = AppSettings.MODE_GET_SENRYU_NORMAL;
 
-  constructor(private senryuService: SenryuServiceProvider) {
+  constructor(private senryuService: SenryuServiceProvider, public loadingCtrl: LoadingController) {
     
   }
 
@@ -31,6 +33,10 @@ export class SenryuListComponent {
   }
 
   loadingFirst():void {
+    const loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
     this.senryuService.getSenryus(this.mode).subscribe(
       pagingObj => {
         this.senryus = pagingObj.data;
@@ -40,7 +46,9 @@ export class SenryuListComponent {
         console.log(pagingObj);
       }, 
       err => console.log(err),
-      () => {}
+      () => {
+        loader.dismiss();
+      }
     );
   }
 

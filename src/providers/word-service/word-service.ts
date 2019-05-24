@@ -20,7 +20,7 @@ export class WordServiceProvider {
 
   getWords(_len:string): Observable<PagingObject>{
   	let senddata = {len:_len};
-    return this.http.get<PagingObject>(AppSettings.API_ENDPOINT+'word', {params:senddata});
+    return this.http.get<PagingObject>(AppSettings.getApiEndPoint()+'word', {params:senddata});
   }
 
 }

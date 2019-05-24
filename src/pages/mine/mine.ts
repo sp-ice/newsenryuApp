@@ -10,7 +10,9 @@ import { AppSettings } from '../../app/app.settings';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage({
+  name:'mine'
+})
 @Component({
   selector: 'page-mine',
   templateUrl: 'mine.html',

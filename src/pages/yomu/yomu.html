@@ -6,10 +6,19 @@
 -->
 <ion-header>
 
-  <ion-toolbar>
+  <!-- <ion-toolbar>
     <ion-title>一句詠む</ion-title>
     <button ion-button right (click)="yomuTapped($event)">詠む</button>
-  </ion-toolbar>
+  </ion-toolbar> -->
+
+    <ion-navbar>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      <ion-title>一句詠む</ion-title>
+    </ion-navbar>
+
+    <button ion-button right (click)="yomuTapped($event)">詠む</button>
 
   <ion-list>
     <ion-item>

@@ -4,6 +4,7 @@ import { WordServiceProvider } from '../../providers/word-service/word-service';
 import { SenryuServiceProvider } from '../../providers/senryu-service/senryu-service';
 import { Word } from '../../models/word';
 import { Senryu } from '../../models/senryu';
+import { AppSettings } from '../../app/app.settings';
 
 /**
  * Generated class for the YomuPage page.
@@ -12,7 +13,9 @@ import { Senryu } from '../../models/senryu';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage({
+  name:'yomu'
+})
 @Component({
   selector: 'page-yomu',
   templateUrl: 'yomu.html',
@@ -24,6 +27,16 @@ export class YomuPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private wordService :WordServiceProvider, private senryuService :SenryuServiceProvider, public loadingCtrl: LoadingController) {
     this.senryu = <Senryu>{};
+  }
+
+  ionViewCanEnter(): boolean{
+    console.log("!?!?"+AppSettings.isLogin());
+    if (AppSettings.isLogin()) {
+      return true;
+    } else {
+      // setTimeout(() => this.navCtrl.push('login'), 0);
+      return false;
+    }
   }
 
   ionViewDidLoad() {

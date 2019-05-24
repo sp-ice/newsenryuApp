@@ -4,10 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { ListPage } from '../pages/list/list';
-import { YomuPage } from '../pages/yomu/yomu';
-import { MinePage } from '../pages/mine/mine';
-import { LikedPage } from '../pages/liked/liked';
-import { LoginPage } from '../pages/login/login';
+import { PagesServiceProvider } from '../providers/pages-service/pages-service';
 
 
 @Component({
@@ -20,17 +17,11 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public pagesService: PagesServiceProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
-    this.pages = [
-      { title: '最新の川柳', component: ListPage },
-      { title: ' 一句詠む', component: YomuPage },
-      { title: '自分が詠んだ川柳', component: MinePage },
-      { title: 'イイネした川柳', component: LikedPage },
-      { title: 'ログイン', component: LoginPage },
-    ];
+    this.pages = pagesService.getPages();
 
   }
 

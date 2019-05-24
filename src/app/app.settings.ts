@@ -1,7 +1,27 @@
 export class AppSettings {
     //URL
-    public static API_ENDPOINT='http://localhost:8100/api/';
-    //public static API_ENDPOINT='http://133.130.91.251/api/';
+    public static HOST="http://localhost:8100";//###
+    // public static HOST="http://newsenryu.spicy-space.xyz";
+    public static API_ENDPOINT_UNLOGINED=AppSettings.HOST+"/api/";
+    public static API_ENDPOINT_LOGINED=AppSettings.HOST+"/apis/";
+    public static AUTH_ENDPOINT_TWITTER=AppSettings.HOST+"/auth/twitter";
+    public static getApiEndPoint(){
+        // if (AppSettings.flg_login) {
+        //     return AppSettings.API_ENDPOINT_LOGINED;
+        // } else {
+        //     return AppSettings.API_ENDPOINT_UNLOGINED;
+        // }
+        return AppSettings.API_ENDPOINT_UNLOGINED;
+    }
+
+    //LOGIN
+    private static flg_login=false;
+    public static isLogin(){
+        return AppSettings.flg_login;
+    }
+    public static setLogin(_flg_login){
+        AppSettings.flg_login = _flg_login;
+    }
 
     //川柳取得モード
     public static MODE_GET_SENRYU_NORMAL=0;
