@@ -19,6 +19,7 @@ export class ListPage {
   ionViewCanEnter(): Promise<any>{
     //ログインチェック
     return new Promise((resolve, reject) => {
+      if (AppSettings.isLogin()) resolve(true);
       let _url = AppSettings.API_ENDPOINT_LOGINED+'check';
       console.log("cehckLogin:"+_url);
       this.http.get(_url, { observe: 'response' }).subscribe(

@@ -5,6 +5,8 @@ import { SenryuServiceProvider } from '../../providers/senryu-service/senryu-ser
 import { Word } from '../../models/word';
 import { Senryu } from '../../models/senryu';
 import { AppSettings } from '../../app/app.settings';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { PagesServiceProvider } from '../../providers/pages-service/pages-service';
 
 /**
  * Generated class for the YomuPage page.
@@ -24,19 +26,51 @@ export class YomuPage {
   words: Array<Word>;
   senryu: Senryu;
   focus_idx: number;
+  next_page_url: string;
+  since_id: number;
+  hasNextData: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private wordService :WordServiceProvider, private senryuService :SenryuServiceProvider, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private wordService :WordServiceProvider, private senryuService :SenryuServiceProvider, public loadingCtrl: LoadingController, public http:HttpClient) {
     this.senryu = <Senryu>{};
   }
 
-  ionViewCanEnter(): boolean{
-    console.log("!?!?"+AppSettings.isLogin());
-    if (AppSettings.isLogin()) {
-      return true;
-    } else {
-      // setTimeout(() => this.navCtrl.push('login'), 0);
-      return false;
-    }
+  ionViewCanEnter(): Promise<any>{
+    // console.log("!?!?"+AppSettings.isLogin());
+    // if (AppSettings.isLogin()) {
+    //   return true;
+    // } else {
+    //   // setTimeout(() => this.navCtrl.push('login'), 0);
+    //   return false;
+    // }
+
+    //ログインチェック
+    return new Promise((resolve, reject) => {
+      if (AppSettings.isLogin()) resolve(true);
+      let _url = AppSettings.API_ENDPOINT_LOGINED+'check';
+      console.log("cehckLogin:"+_url);
+      this.http.get(_url, { observe: 'response' }).subscribe(
+        (res: HttpResponse<any>) => {
+          console.log("res.status:"+res.status);
+          if (res.status == 200 ){
+            AppSettings.setLogin(true);
+            // this.pagesService.enableLoginedMenu();//メニューを追加
+          } else {
+            AppSettings.setLogin(false);
+          }
+          resolve(true);
+        },
+        err => {
+          console.log(err);
+          AppSettings.setLogin(false);
+          //###
+          AppSettings.setLogin(true);
+          // this.pagesService.enableLoginedMenu();//メニューを追加
+          //###
+          resolve(true);
+        },
+        () => {}
+      );
+    });
   }
 
   ionViewDidLoad() {
@@ -47,15 +81,46 @@ export class YomuPage {
     this.focus_idx = idx;
     console.log(idx);
 
+    const loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
+
     let len = (this.focus_idx == 2) ? '7' : '5';
     this.wordService.getWords(len).subscribe(
       pagingObj => {
         this.words = pagingObj.data;
-        console.log(this.words);
+        this.since_id = this.words[0].id;
+        this.next_page_url = pagingObj.next_page_url;
+        this.hasNextData=(this.next_page_url!=null);
+        console.log(pagingObj);
       }, 
       err => console.log(err),
-      () => {}
+      () => {
+        loader.dismiss();
+      }
     );
+  }
+
+  loadingNext(): Promise<any> {
+    return new Promise((resolve) => {
+      let url_next = this.next_page_url;
+      url_next = url_next.replace('http://133.130.91.251','http://localhost:8100');//todo 環境変数で切り分け
+      let len = (this.focus_idx == 2) ? '7' : '5';
+      console.log("!!!!!");
+      console.log(url_next);
+      this.wordService.getWords(len, url_next, this.since_id).subscribe(
+        pagingObj => {
+          this.words = this.words.concat(pagingObj.data);
+          this.next_page_url = pagingObj.next_page_url;
+          this.hasNextData=(this.next_page_url!=null);
+          console.log(pagingObj);
+          resolve();
+        }, 
+        err => console.log(err),
+        () => {}
+      );
+    })
   }
 
   wordTapped(event, word) {

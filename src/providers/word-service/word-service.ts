@@ -18,9 +18,19 @@ export class WordServiceProvider {
     console.log('Hello WordServiceProvider Provider');
   }
 
-  getWords(_len:string): Observable<PagingObject>{
-  	let senddata = {len:_len};
-    return this.http.get<PagingObject>(AppSettings.getApiEndPoint()+'word', {params:senddata});
+  getWords(_len:string, _url: string=AppSettings.getApiEndPoint()+'word', _since_id:number=null): Observable<PagingObject>{
+    let senddata = {len:_len};
+    if(_since_id != null){
+  		_url = this.addParam2URL(_url, 'since_id', _since_id);
+    }
+    return this.http.get<PagingObject>(_url, {params:senddata});
+  }
+
+  private addParam2URL(_url: string, _key:string, _value:any):string{
+    var resurl = _url;
+    resurl += (resurl.indexOf('?') == -1) ? '?':'&';
+    resurl += _key + '=' + String(_value);
+    return resurl;
   }
 
 }

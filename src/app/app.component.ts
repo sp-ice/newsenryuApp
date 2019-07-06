@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Events } from 'ionic-angular';
 
 import { ListPage } from '../pages/list/list';
 import { PagesServiceProvider } from '../providers/pages-service/pages-service';
@@ -15,14 +16,18 @@ export class MyApp {
 
   rootPage: any = ListPage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, isSelected:boolean}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public pagesService: PagesServiceProvider) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public pagesService: PagesServiceProvider, public events: Events) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
-    this.pages = pagesService.getPages();
-
+    events.subscribe('updateMenu', (pages) => {
+      console.log("###updateMenu",pages);
+      this.pages = pages;
+    });
+    pagesService.eanableDefaultMenu();
+    pagesService.changePage('list');
   }
 
   initializeApp() {

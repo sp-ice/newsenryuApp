@@ -22,21 +22,36 @@
 
   <ion-list>
     <ion-item>
-      <ion-input type="text" placeholder="上の句(5)" length=5 value={{senryu.kami_ku}} (focus)="inputFocused($event, '1')"></ion-input>
+      <ion-input type="text" readonly placeholder="上の句(5)" length=5 value={{senryu.kami_ku}} (focus)="inputFocused($event, '1')"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input type="text" placeholder="中の句(7)" length=7 value={{senryu.naka_ku}} (focus)="inputFocused($event, '2')"></ion-input>
+      <ion-input type="text" readonly placeholder="中の句(7)" length=7 value={{senryu.naka_ku}} (focus)="inputFocused($event, '2')"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input type="text" placeholder="下の句(5)" length=5 value={{senryu.simo_ku}} (focus)="inputFocused($event, '3')"></ion-input>
+      <ion-input type="text" readonly placeholder="下の句(5)" length=5 value={{senryu.simo_ku}} (focus)="inputFocused($event, '3')"></ion-input>
     </ion-item>
   </ion-list>
+
+  <!-- <hr>
+  <ion-item>
+   <ion-label>絞り込み</ion-label>
+   <ion-input type="search" name="filterWord"></ion-input>
+  </ion-item>
+  <hr> -->
 
 </ion-header>
 
 
 <ion-content padding>
+  
   <ion-col *ngFor="let word of words">
-    <span (click)="wordTapped($event, word)">{{word.word}}</span>
+      <button ion-button round outline (click)="wordTapped($event, word)">{{word.word}}</button>
   </ion-col>
+
+  <ion-infinite-scroll *ngIf="hasNextData" (ionInfinite)="$event.waitFor(loadingNext())">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>
