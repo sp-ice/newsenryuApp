@@ -1,28 +1,34 @@
 <ion-card *ngFor="let senryu of senryus">
-  <ion-item>
-    <p class="item-date">{{ senryu.user_name }} <ion-icon name="calendar"></ion-icon> {{ senryu.created_at }} </p>
-  </ion-item>
-
   <ion-card-content>
-      <a href="{{senryu.kami_url}}" target="_blank">{{senryu.kami_ku}}</a>
-      <a href="{{senryu.naka_url}}" target="_blank">{{senryu.naka_ku}}</a>
-      <a href="{{senryu.simo_url}}" target="_blank">{{senryu.simo_ku}}</a>
+      <a class="midashi" href="{{senryu.kami_url}}" target="_blank">{{senryu.kami_ku}}</a>
+      <a class="midashi" href="{{senryu.naka_url}}" target="_blank">{{senryu.naka_ku}}</a>
+      <a class="midashi" href="{{senryu.simo_url}}" target="_blank">{{senryu.simo_ku}}</a>
   </ion-card-content>
+
+  <!-- <ion-item>
+      <p class="item-date">{{ senryu.user_name }} <ion-icon name="calendar"></ion-icon> {{ senryu.created_at }} </p>
+    </ion-item> -->
 
   <ion-row class="card-row">
     <ion-col (click)="likeTapped($event, senryu)" *ngIf="senryu.is_liked!==1">
       <div>
-        <ion-icon name="heart-outline"></ion-icon>{{ senryu.like_count }}
+        <ion-icon name="heart-outline"></ion-icon>  {{ senryu.like_count }}
       </div>
     </ion-col>
     <ion-col (click)="unLikeTapped($event, senryu)" *ngIf="senryu.is_liked===1">
         <div>
-          <ion-icon name="heart"></ion-icon>{{ senryu.like_count }}
+          <ion-icon name="heart"></ion-icon>  {{ senryu.like_count }}
         </div>
       </ion-col>
     <!-- <ion-col (click)="itemTapped($event, item)">
       <div><ion-icon name="chatboxes"></ion-icon> {{ senryu.comments_count }}</div>
     </ion-col> -->
+    <ion-col>
+        <ion-icon name="person"></ion-icon>  {{ senryu.user_name }} 
+    </ion-col>
+    <ion-col>
+        <ion-icon name="calendar"></ion-icon>  {{ senryu.created_at }} 
+    </ion-col>
   </ion-row>
 </ion-card>
 

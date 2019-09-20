@@ -1,3 +1,29 @@
 senryu-list {
-
+    // ion-card{
+    //     display: inline-block;
+    // }
+    // .card-md{
+    //     width:calc(50% - 15px);
+    //     margin-left:10px;
+    //     margin-right:0px;
+    // }
+    .card-content-md{
+        padding-top:0.25em;
+        padding-bottom:0.25em;
+    }
+    a.midashi{
+        display: inline-block;
+        color:#010079;
+        // text-shadow: 0 0 5px white;
+        padding: 0.1em 0.15em;
+        margin:0.25em;
+        background: -webkit-repeating-linear-gradient(-45deg,#555, #555 3px,#333 3px, #333 7px);
+        background: repeating-linear-gradient(-45deg, #555, #555 3px,#333 3px, #333 7px);
+        // a{
+            color:white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size:1.5em;
+        // }
+    }
 }
