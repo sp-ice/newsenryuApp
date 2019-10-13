@@ -14,7 +14,7 @@ import { PagesServiceProvider } from '../providers/pages-service/pages-service';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ListPage;
+  rootPage: any = 'list';
 
   pages: Array<{title: string, component: any, isSelected:boolean}>;
 
@@ -26,8 +26,7 @@ export class MyApp {
       console.log("###updateMenu",pages);
       this.pages = pages;
     });
-    pagesService.eanableDefaultMenu();
-    pagesService.changePage('list');
+    pagesService.eanableDefaultMenu('list');
   }
 
   initializeApp() {

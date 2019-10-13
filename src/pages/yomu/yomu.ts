@@ -20,7 +20,7 @@ import { PagesServiceProvider } from '../../providers/pages-service/pages-servic
 })
 @Component({
   selector: 'page-yomu',
-  templateUrl: 'yomu.html',
+  templateUrl: 'yomu.html'
 })
 export class YomuPage {
   words: Array<Word>;
@@ -29,57 +29,36 @@ export class YomuPage {
   next_page_url: string;
   since_id: number;
   hasNextData: boolean;
+  error_msgs: Array<String>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private wordService :WordServiceProvider, private senryuService :SenryuServiceProvider, public loadingCtrl: LoadingController, public http:HttpClient) {
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              private wordService :WordServiceProvider,
+              private senryuService :SenryuServiceProvider,
+              private loadingCtrl: LoadingController,
+              private http:HttpClient,
+              private pagesService: PagesServiceProvider
+              ) {
     this.senryu = <Senryu>{};
   }
 
   ionViewCanEnter(): Promise<any>{
-    // console.log("!?!?"+AppSettings.isLogin());
-    // if (AppSettings.isLogin()) {
-    //   return true;
-    // } else {
-    //   // setTimeout(() => this.navCtrl.push('login'), 0);
-    //   return false;
-    // }
-
     //ログインチェック
-    return new Promise((resolve, reject) => {
-      if (AppSettings.isLogin()) resolve(true);
-      let _url = AppSettings.API_ENDPOINT_LOGINED+'check';
-      console.log("cehckLogin:"+_url);
-      this.http.get(_url, { observe: 'response' }).subscribe(
-        (res: HttpResponse<any>) => {
-          console.log("res.status:"+res.status);
-          if (res.status == 200 ){
-            AppSettings.setLogin(true);
-            // this.pagesService.enableLoginedMenu();//メニューを追加
-          } else {
-            AppSettings.setLogin(false);
-          }
-          resolve(true);
-        },
-        err => {
-          console.log(err);
-          AppSettings.setLogin(false);
-          //###
-          AppSettings.setLogin(true);
-          // this.pagesService.enableLoginedMenu();//メニューを追加
-          //###
-          resolve(true);
-        },
-        () => {}
-      );
-    });
+    return this.pagesService.checkLoginAndUpdateMenu('yomu');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad YomuPage');
+    if ( !AppSettings.isLogin() ) {
+      this.navCtrl.setRoot('login');
+    }
   }
 
   inputFocused(event, idx) {
     this.focus_idx = idx;
     console.log(idx);
+
+    this.error_msgs = [];
 
     const loader = this.loadingCtrl.create({
       content: "Please wait..."
@@ -105,9 +84,10 @@ export class YomuPage {
   loadingNext(): Promise<any> {
     return new Promise((resolve) => {
       let url_next = this.next_page_url;
-      url_next = url_next.replace('http://133.130.91.251','http://localhost:8100');//todo 環境変数で切り分け
+      if (AppSettings.FLG_DEBUG) {
+        url_next = url_next.replace('http://133.130.91.251','http://localhost:8100');
+      }
       let len = (this.focus_idx == 2) ? '7' : '5';
-      console.log("!!!!!");
       console.log(url_next);
       this.wordService.getWords(len, url_next, this.since_id).subscribe(
         pagingObj => {
@@ -143,14 +123,34 @@ export class YomuPage {
       content: 'Please wait...'
     });
     loading.present();
+    this.error_msgs = [];
+    this.words = [];
     console.log(this.senryu);
     this.senryuService.postSenryu(this.senryu).subscribe(
       storedSenryu => {
         loading.dismiss();
         console.log(storedSenryu);
-        this.navCtrl.pop();
+        if (this,this.navCtrl.length() > 1){
+          this.navCtrl.pop();
+        } else {
+          this.navCtrl.setRoot('list');
+        }
+        
       }, 
-      err => console.log(err),
+      err => {
+        console.log(err);
+        if (err.error.hasOwnProperty('word_kami_id')){
+          this.error_msgs = this.error_msgs.concat(err.error.word_kami_id);
+        }
+        if (err.error.hasOwnProperty('word_naka_id')){
+          this.error_msgs = this.error_msgs.concat(err.error.word_naka_id);
+        }
+        if (err.error.hasOwnProperty('word_simo_id')){
+          this.error_msgs = this.error_msgs.concat(err.error.word_simo_id);
+        }
+        console.log(this.error_msgs);
+        loading.dismiss();
+      },
       () => {}
     );
   }

@@ -1,3 +1,14 @@
 page-yomu {
-
+    button.yomu{
+        float:right;
+        margin-right:2rem;
+        margin-bottom:2rem;
+    }
+    dl.err {
+        background-color: #eccece;
+        dt {
+            color:red;
+            padding: 0.5rem 1rem;
+        }
+    }
 }

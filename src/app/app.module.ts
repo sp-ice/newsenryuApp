@@ -11,17 +11,14 @@ import { LoginPage } from '../pages/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { SenryuServiceProvider } from '../providers/senryu-service/senryu-service';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { SenryuServiceProvider } from '../providers/senryu-service/senryu-service';
 import { WordServiceProvider } from '../providers/word-service/word-service';
 import { PagesServiceProvider } from '../providers/pages-service/pages-service';
 
 import { ComponentsModule } from '../components/components.module';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { AppSettings } from './app.settings';
-import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 // import { ListPageModule } from '../pages/list/list.module';
 import { LoginPageModule } from '../pages/login/login.module';
 import { YomuPageModule } from '../pages/yomu/yomu.module';
@@ -31,26 +28,25 @@ import { LikedPageModule } from '../pages/liked/liked.module';
 @NgModule({
   declarations: [
     MyApp,
-    ListPage,
+    // ListPage,
     // YomuPage,
-    MinePage,
-    LikedPage
+    // MinePage,
+    // LikedPage,
     // LoginPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    AngularFireModule.initializeApp(AppSettings.FIREBASE_CONFIG), 
     ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    ListPage,
+    // ListPage,
     // YomuPage,
-    MinePage,
-    LikedPage
+    // MinePage,
+    // LikedPage,
     // LoginPage
   ],
   providers: [
@@ -60,9 +56,7 @@ import { LikedPageModule } from '../pages/liked/liked.module';
     SenryuServiceProvider,
     HttpClientModule,
     WordServiceProvider,
-    PagesServiceProvider,
-    AngularFireAuth,
-    AuthServiceProvider
+    PagesServiceProvider
   ]
 })
 export class AppModule {}

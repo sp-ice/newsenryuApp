@@ -40,7 +40,9 @@ export class SenryuListComponent {
     this.senryuService.getSenryus(this.mode).subscribe(
       pagingObj => {
         this.senryus = pagingObj.data;
-        this.since_id = this.senryus[0].id;
+        if(this.senryus.length > 0) {
+          this.since_id = this.senryus[0].id;
+        }
         this.next_page_url = pagingObj.next_page_url;
         this.hasNextData=(this.next_page_url!=null);
         console.log(pagingObj);

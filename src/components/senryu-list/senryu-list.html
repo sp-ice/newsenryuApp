@@ -1,4 +1,14 @@
 <ion-card *ngFor="let senryu of senryus">
+  <ion-row class="card-row">
+    <ion-col>
+        <ion-icon name="person"></ion-icon>  {{ senryu.user_name }} 
+    </ion-col>
+    <ion-col>
+        <ion-icon name="calendar"></ion-icon>  {{ senryu.created_at }} 
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+
   <ion-card-content>
       <a class="midashi" href="{{senryu.kami_url}}" target="_blank">{{senryu.kami_ku}}</a>
       <a class="midashi" href="{{senryu.naka_url}}" target="_blank">{{senryu.naka_ku}}</a>
@@ -23,14 +33,12 @@
     <!-- <ion-col (click)="itemTapped($event, item)">
       <div><ion-icon name="chatboxes"></ion-icon> {{ senryu.comments_count }}</div>
     </ion-col> -->
-    <ion-col>
-        <ion-icon name="person"></ion-icon>  {{ senryu.user_name }} 
-    </ion-col>
-    <ion-col>
-        <ion-icon name="calendar"></ion-icon>  {{ senryu.created_at }} 
-    </ion-col>
   </ion-row>
 </ion-card>
+
+<div *ngIf="senryus?.length == 0">
+  <p>該当する川柳のデータがありません</p>
+</div>
 
 <ion-infinite-scroll *ngIf="hasNextData" (ionInfinite)="$event.waitFor(loadingNext())">
   <ion-infinite-scroll-content
