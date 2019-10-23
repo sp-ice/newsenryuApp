@@ -1,5 +1,7 @@
 import { Component, Input} from '@angular/core';
 
+import { NavController} from 'ionic-angular';
+
 import { SenryuServiceProvider } from '../../providers/senryu-service/senryu-service';
 import { Senryu } from '../../models/senryu';
 import { AppSettings } from '../../app/app.settings';
@@ -22,7 +24,9 @@ export class SenryuListComponent {
   hasNextData: boolean;
   @Input() mode: number = AppSettings.MODE_GET_SENRYU_NORMAL;
 
-  constructor(private senryuService: SenryuServiceProvider, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController,
+    private senryuService: SenryuServiceProvider,
+    public loadingCtrl: LoadingController) {
     
   }
 
@@ -94,5 +98,9 @@ export class SenryuListComponent {
       err => console.log(err),
       () => {}
     );
+  }
+
+  senryuTapped($event, senryu_id:number) {
+    this.navCtrl.push('detail',{id:senryu_id});
   }
 }

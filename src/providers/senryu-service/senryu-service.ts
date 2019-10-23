@@ -39,6 +39,11 @@ export class SenryuServiceProvider {
     return this.http.get<PagingObject>(_url);
   }
 
+  getSenryu(_id:number): Observable<Senryu>{
+    let url = AppSettings.getApiEndPoint()+'senryu/'+_id;
+    return this.http.get<Senryu>(url);
+  }
+
   postSenryu(_senryu:Senryu): Observable<Senryu>{
   	let url = AppSettings.getApiEndPoint()+'senryu';
   	let senddata={

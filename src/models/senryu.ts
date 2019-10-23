@@ -11,6 +11,9 @@ export interface Senryu {
     kami_url: string;
     naka_url: string;
     simo_url: string;
+    kami_title: string;
+    naka_title: string;
+    simo_title: string;
     like_count: number;
     is_liked: number;
     view: number;

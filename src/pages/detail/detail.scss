@@ -1,15 +1,11 @@
-senryu-list {
-    // ion-card{
-    //     display: inline-block;
-    // }
-    // .card-md{
-    //     width:calc(50% - 15px);
-    //     margin-left:10px;
-    //     margin-right:0px;
-    // }
+page-detail {
     .card-content-md{
         padding-top:0.25em;
         padding-bottom:0.25em;
+    }
+    a.news{
+        display: block;
+
     }
     a.midashi{
         display: inline-block;
@@ -25,11 +21,13 @@ senryu-list {
             font-weight: bold;
             font-size:1.5em;
         // }
-        cursor: pointer;
     }
     div.like_heart{
         display: inline-block;
         cursor: pointer;
         padding:0.5rem;
+    }
+    div.share_tweet{
+        display: inline-block;
     }
 }
