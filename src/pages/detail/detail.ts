@@ -55,13 +55,19 @@ export class DetailPage {
         //Tweet Button
         (async () => { 
           await this.delay(1000);
+          var senryu_text = `＊ーーーーーーーーーーーーーーーーーーーーーーーー＊
+　　${this.senryu.kami_ku}
+　　　　　${this.senryu.naka_ku}
+　　　　　　　　${this.senryu.simo_ku}
+＊ーーーーーーーーーーーーーーーーーーーーーーーー＊
+`;
           var element = document.createElement('a');//aタグを作ります
           element.setAttribute('href',"https://twitter.com/share?ref_src=twsrc%5Etfw");
           element.setAttribute('class',"twitter-share-button");
           element.setAttribute('data-size',"large");
-          element.setAttribute('data-text',"シェアしたいテキスト！");
-          element.setAttribute('data-url',"http://example.com");
-          element.setAttribute('data-hashtags',"hogehoge");
+          element.setAttribute('data-text',senryu_text);
+          element.setAttribute('data-url',AppSettings.HOST + '/app/#/detail/' + this.senryu.id);
+          element.setAttribute('data-hashtags',"ニュース川柳");
           element.setAttribute('data-show-count',"false");
 
           var script = document.createElement('script');//scriptタグを作ります

@@ -33,7 +33,9 @@ export class SenryuListComponent {
   ngAfterViewInit() {
     console.log('ngAfterViewInit SenryuList');
     console.log(this.mode);
-    this.loadingFirst();
+    if (this.mode == AppSettings.MODE_GET_SENRYU_NORMAL || AppSettings.isLogin()){
+      this.loadingFirst();
+    }
   }
 
   loadingFirst():void {
@@ -100,7 +102,7 @@ export class SenryuListComponent {
     );
   }
 
-  senryuTapped($event, senryu_id:number) {
+  senryuTapped(event, senryu_id:number) {
     this.navCtrl.push('detail',{id:senryu_id});
   }
 }
