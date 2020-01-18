@@ -1,9 +1,13 @@
+import { environment } from "@app/environment";
+
 export class AppSettings {
     //DEBUG
-    public static FLG_DEBUG = false;//###
+    public static FLG_DEBUG = false;//###ローカル開発用
+    public static FLG_PROD = environment.production;
 
     //URL
-    public static HOST= (AppSettings.FLG_DEBUG) ? "http://localhost:8100" : "http://newsenryu.spicy-space.xyz";
+    public static HOST= (AppSettings.FLG_DEBUG) ? "http://localhost:8100" : "http://newsenryu.spicy-space.xyz"
+                        + (AppSettings.FLG_PROD) ? "" : ":7080";
     public static API_ENDPOINT_UNLOGINED=AppSettings.HOST+"/api/";
     public static API_ENDPOINT_LOGINED=AppSettings.HOST+"/apis/";
     public static AUTH_ENDPOINT_TWITTER=AppSettings.HOST+"/auth/twitter";
