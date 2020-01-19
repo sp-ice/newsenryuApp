@@ -55,11 +55,13 @@ export class DetailPage {
         //Tweet Button
         (async () => { 
           await this.delay(1000);
-          var senryu_text = `＊ーーーーーーーーーーーーーーーーーーーーーーーー＊
+          var senryu_text = `
+${this.senryu.user_name}さんの一句
+＊ーーーーーーーーーーーーーーーーーー＊
 　　${this.senryu.kami_ku}
 　　　　　${this.senryu.naka_ku}
 　　　　　　　　${this.senryu.simo_ku}
-＊ーーーーーーーーーーーーーーーーーーーーーーーー＊
+＊ーーーーーーーーーーーーーーーーーー＊
 `;
           var element = document.createElement('a');//aタグを作ります
           element.setAttribute('href',"https://twitter.com/share?ref_src=twsrc%5Etfw");
